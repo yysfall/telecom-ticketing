@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main {
+    margin-left: auto;
+    margin-right: auto;
+    height: 800px;
+    width: 1200px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+}
+
+#drawer {
+    height: 100%;
+    width: 30%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #38B6FF;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#display {
+    height: 100%;
+    width: 70%;
+}
+
+#displayHeader {
+    height: 95px;
+    width: 100%;
+    background-color: #004AAD;
+    border-top-right-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+#headerTitle {
+    color: white;
+}
+
+#drawerHeader {
+    height: 95px;
+    width: 100%;
+    border-bottom: 2px solid #004AAD;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+    background-color: #004AAD;
+    border-radius: 50%;
+}
+
+#newTicket {
+    width: 120px;
+    height: 40px;
+    background-color: #004AAD;
+    border: none;
+    color: white;
+    border-radius: 20px;
+}
+
+#searchBar {
+    width: 320px;
+    height: 40px;
+    margin: 20px auto 10px auto;
+}
+
+#drawer .navBtn {
+    margin: 20px 0 20px 20px;
+    background-color: #38B6FF;
+    border: none;
+    font-size: 16px;
+}
+
+hr {
+    border: 1px solid #004AAD;
+    width: 320px;
+    margin: 0 auto 0 auto;
+}
+
+.companyList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+
+.companyItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e6e6e6;
+    padding: 0.75rem 1rem;
+    border-radius: 30px;
+}
+
+.companyName {
+    font-weight: bold;
+    margin-right: auto;
+}
+
+.callBtn, .emailBtn{
+    width: 120px;
+    height: 40px;
+    padding: 0.5em 1rem;
+    border: none;
+    border-radius: 20px;
+    margin-left: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.callBtn {
+    background-color: #278055;
+    color: white;
+}
+
+.emailBtn {
+    background-color: #004AAD;
+    color: white;
+}
