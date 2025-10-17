@@ -77,7 +77,6 @@ const submitBtn = document.getElementById("submitTicket");
 const companySelect = document.getElementById("companySelect");
 const messageInput = document.getElementById("messageInput");
 
-
 let allTickets = [];
 
 
@@ -97,31 +96,6 @@ newTicketBtn.addEventListener("click", () => {
 cancelBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
     resetModal();
-});
-
-submitBtn.addEventListener("click", () => {
-    const company = companySelect.value;
-    const subject = subjectInput.value.trim();
-    const message = messageInput.value.trim();
-
-    if (!company || !subject || !message) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    allTickets.push({
-        company,
-        subject,
-        message,
-        status: "open",
-        createdAt: new Date()
-    });
-
-    modal.classList.add("hidden");
-    resetModal();
-
-    document.querySelector('[status="all"]').click();
-    renderAllTickets();
 });
 
 function resetModal() {
@@ -169,5 +143,39 @@ function renderAllTickets() {
         displayContent.appendChild(row);
     });
 }
+
+const thankYouPopup = document.getElementById("thankYouPopup");
+const closeThankYou = document.getElementById("closeThankYou");
+
+submitBtn.addEventListener("click", () => {
+    const company = companySelect.value;
+    const subject = subjectInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!company || !subject || !message) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    allTickets.push({
+        company,
+        subject,
+        message,
+        status: "open",
+        createdAt: new Date()
+    });
+
+    modal.classList.add("hidden");
+    resetModal();
+
+    document.querySelector('[status="all"]').click();
+    renderAllTickets();
+
+    thankYouPopup.classList.remove("hidden");
+});
+
+closeThankYou.addEventListener("click", () => {
+    thankYouPopup.classList.add("hidden");
+});
 
 

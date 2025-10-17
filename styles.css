@@ -277,4 +277,36 @@ hr {
     background-color: #D32F2F;
 }
 
+.thankYouPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+.thankYouContent {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.thankYouPopup.hidden {
+  display: none;
+}
+
+#closeThankYou {
+    width: 80px;
+    border-radius: 20px;
+    border: none;
+    background-color: #004AAD;
+    height: 30px;
+    color: white    ;
+}
