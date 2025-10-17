@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Inter", sans-serif;
 }
 
 body {
@@ -139,3 +140,141 @@ hr {
     background-color: #004AAD;
     color: white;
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    }
+
+.modal.hidden {
+    display: none;
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.modalContent h2 {
+    margin-top: 0;
+}
+
+.modalContent label {
+    display: block;
+    margin-top: 10px;
+}
+
+#subjectInput {
+    width: 100%;
+    height: 30px;
+}
+.modalContent textarea,
+.modalContent select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.modalButtons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+.modalButtons button {
+    border-radius: 20px;
+    width: 80px;
+    border: none;
+}
+
+#submitTicket {
+    background-color: #004AAD;
+    color: white;
+}
+
+.ticketHeaderRow,
+.ticketRowStyled {
+    display: grid;
+    grid-template-columns: 2.5fr 2fr 1fr 1.5fr;
+    align-items: center;
+    padding: 12px 20px;
+    font-family: sans-serif;
+}
+
+.ticketHeaderRow {
+    font-weight: bold;
+    background-color: #f8f8f8;
+    border-top: 2px solid #ddd;
+    border-bottom: 2px solid #ddd;
+}
+
+
+.ticketRowStyled {
+    background-color: #f2f2f2;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    transition: background 0.2s ease;
+}
+
+.ticketRowStyled:hover {
+    background-color: #e0e0e0;
+}
+
+.ticketCol {
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.ticketCol.company .toLabel {
+    font-weight: 500;
+}
+
+
+.statusBadge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    color: #fff;
+    text-align: center;
+    display: inline-block;
+    min-width: 60px;
+    text-transform: capitalize;
+}
+
+.statusBadge.open {
+    background-color: #4CAF50;
+}
+
+.statusBadge.pending {
+    background-color: #FFC107;
+    color: #000;
+}
+
+.statusBadge.solved {
+    background-color: #1E88E5;
+}
+
+.statusBadge.closed {
+    background-color: #D32F2F;
+}
+
+
