@@ -77,10 +77,10 @@ const submitBtn = document.getElementById("submitTicket");
 const companySelect = document.getElementById("companySelect");
 const messageInput = document.getElementById("messageInput");
 
-// Ticket list
+
 let allTickets = [];
 
-// Populate dropdown with companies
+
 companies.forEach(company => {
     const option = document.createElement("option");
     option.value = company;
@@ -88,18 +88,17 @@ companies.forEach(company => {
     companySelect.appendChild(option);
 });
 
-// Open modal on new ticket
+
 newTicketBtn.addEventListener("click", () => {
     modal.classList.remove("hidden");
 });
 
-// Cancel modal
+
 cancelBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
     resetModal();
 });
 
-// Submit new ticket
 submitBtn.addEventListener("click", () => {
     const company = companySelect.value;
     const subject = subjectInput.value.trim();
@@ -121,7 +120,6 @@ submitBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
     resetModal();
 
-    // Switch to "All Tickets"
     document.querySelector('[status="all"]').click();
     renderAllTickets();
 });
@@ -142,7 +140,7 @@ function renderAllTickets() {
         return;
     }
 
-    // Header row
+
     const headerRow = document.createElement("div");
     headerRow.className = "ticketHeaderRow";
     headerRow.innerHTML = `
@@ -153,7 +151,6 @@ function renderAllTickets() {
     `;
     displayContent.appendChild(headerRow);
 
-    // Ticket rows
     allTickets.forEach(ticket => {
         const row = document.createElement("div");
         row.className = "ticketRowStyled";
