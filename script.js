@@ -21,6 +21,15 @@ const companies = [
     "Smart"
 ];
 
+const companyWebsites = {
+  Converge: "https://convergeict.com/",
+  DITO: "https://www.dito.ph/",
+  Globe: "https://www.globe.com.ph/",
+  PLDT: "https://www.pldt.com/",
+  Smart: "https://smart.com.ph/"
+};
+
+
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         const status = button.getAttribute("status");
@@ -60,6 +69,17 @@ function renderCompanies(){
         callButton.className = "callBtn";
         callButton.textContent = "Call";
 
+        callButton.addEventListener("click", () => {
+        const url = companyWebsites[company];
+        if (url) {
+            websiteLink.href = url;
+            websiteLink.textContent = url;
+            websitePopup.classList.remove("hidden");
+        } else {
+            alert("Website not available.");
+        }
+        });
+
         const emailButton = document.createElement("button");
         emailButton.className = "emailBtn";
         emailButton.textContent = "Email";
@@ -78,7 +98,6 @@ function renderCompanies(){
 
     displayContent.appendChild(list);
 }
-
 
 const modal = document.getElementById("ticketModal");
 const newTicketBtn = document.getElementById("newTicket");
@@ -260,4 +279,18 @@ searchBar.addEventListener("input", function () {
     const text = item.textContent.toLowerCase();
     item.style.display = text.includes(query) ? "" : "none";
   });
+});
+
+const websitePopup = document.getElementById("websitePopup");
+const websiteClose = document.getElementById("websiteClose");
+const websiteLink = document.getElementById("websiteLink");
+
+websiteClose.addEventListener("click", () => {
+    websitePopup.classList.add("hidden");
+});
+
+const closeWebsitePopup = document.getElementById("closeWebsitePopup");
+
+closeWebsitePopup.addEventListener("click", () => {
+    websitePopup.classList.add("hidden");
 });
