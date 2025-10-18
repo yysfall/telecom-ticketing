@@ -249,7 +249,7 @@ hr {
 .ticketHeaderRow,
 .ticketRowStyled {
     display: grid;
-    grid-template-columns: 2.5fr 2fr 1fr 1.5fr;
+    grid-template-columns: 2.5fr 2fr 1fr 1.5fr 100px;
     align-items: center;
     padding: 12px 20px;
     font-family: sans-serif;
@@ -366,6 +366,23 @@ hr {
 
 .ticketCol.status button:hover {
     opacity: 0.8;
+}
+
+.ticketCol.delete {
+    width: 100px;
+    text-align: center;
+}
+
+.deleteBtn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.deleteBtn:hover {
+    background-color: #c0392b;
 }
 
 

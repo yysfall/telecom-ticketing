@@ -9,7 +9,8 @@ const titles = {
     pending: "PENDING TICKETS",
     solved: "SOLVED TICKETS",
     closed: "CLOSED TICKETS",
-    telecom: "TELECOM COMPANIES"
+    telecom: "TELECOM COMPANIES",
+    trash: "TRASH"
 };
 
 const companies = [
@@ -63,14 +64,21 @@ function renderCompanies(){
         emailButton.className = "emailBtn";
         emailButton.textContent = "Email";
 
+        emailButton.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            companySelect.value = company;
+        });
+
         item.appendChild(name);
         item.appendChild(callButton);
         item.appendChild(emailButton);
 
         list.appendChild(item);
     });
+
     displayContent.appendChild(list);
 }
+
 
 const modal = document.getElementById("ticketModal");
 const newTicketBtn = document.getElementById("newTicket");
@@ -153,11 +161,13 @@ function renderTickets(status = "all") {
     const headerRow = document.createElement("div");
     headerRow.className = "ticketHeaderRow";
     headerRow.innerHTML = `
-        <div class="ticketCol company">Telecom Companies</div>
-        <div class="ticketCol subject">Subject</div>
-        <div class="ticketCol status">Status</div>
-        <div class="ticketCol date">Date</div>
-    `;
+    <div class="ticketCol company">Telecom Companies</div>
+    <div class="ticketCol subject">Subject</div>
+    <div class="ticketCol status">Status</div>
+    <div class="ticketCol date">Date</div>
+    <div class="ticketCol delete">Delete</div>
+`;
+
     displayContent.appendChild(headerRow);
 
     toShow.forEach((ticket, index) => {
@@ -169,6 +179,10 @@ function renderTickets(status = "all") {
         statusBtn.className = `statusBadge ${currentStatus}`;
         statusBtn.textContent = currentStatus.toUpperCase();
 
+        if (currentStatus === "closed") {
+        statusBtn.disabled = true;
+        statusBtn.classList.add("disabled");
+    } else {
         statusBtn.addEventListener("click", () => {
             const statuses = ["open", "pending", "solved", "closed"];
             let currentIndex = statuses.indexOf((ticket.status || "open").toLowerCase());
@@ -179,6 +193,8 @@ function renderTickets(status = "all") {
             statusBtn.className = `statusBadge ${ticket.status.toLowerCase()}`;
             if (status !== "all") renderTickets(status);
         });
+    }
+
 
         const companyCol = document.createElement("div");
         companyCol.className = "ticketCol company";
@@ -205,6 +221,23 @@ function renderTickets(status = "all") {
         row.appendChild(statusCol);
 
         row.appendChild(dateCol);
+        
+        if ((ticket.status || "").toLowerCase() !== "trash") {
+            const deleteCol = document.createElement("div");
+            deleteCol.className = "ticketCol delete";
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "deleteBtn";
+
+            deleteBtn.addEventListener("click", () => {
+                ticket.status = "trash";
+                renderTickets(status);
+            });
+
+            deleteCol.appendChild(deleteBtn);
+            row.appendChild(deleteCol);
+        }
 
         displayContent.appendChild(row);
     });
