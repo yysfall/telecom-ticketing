@@ -63,26 +63,36 @@ body {
     padding: 20px;
 }
 
-#logo {
-    width: 50px;
-    height: 50px;
-    background-color: #004AAD;
+#logo img {
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
+    object-fit: cover;
+    display: block;
 }
 
 #newTicket {
-    width: 120px;
+    width: 130px;
     height: 40px;
+    font-size: 14px;
     background-color: #004AAD;
     border: none;
     color: white;
-    border-radius: 20px;
+    border-radius: 10px;
+      transition: transform 0.2s ease;
+}
+
+#newTicket:hover {
+    background-color: #003080;
+    cursor: pointer;
+    transform: scale(1.05);
 }
 
 #searchBar {
     width: 320px;
     height: 40px;
     margin: 20px auto 10px auto;
+    padding: 8px;
 }
 
 #drawer .navBtn {
@@ -90,6 +100,17 @@ body {
     background-color: #38B6FF;
     border: none;
     font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    
+}
+
+#drawer .navBtn.active {
+    background-color: #004AAD;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    padding: 8px 20px 8px 20px;
+    border-radius: 10px;
 }
 
 hr {
@@ -208,6 +229,23 @@ hr {
     color: white;
 }
 
+#submitTicket:hover {
+    background-color: #003080;
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
+#cancelTicket {
+    background-color: #888;
+    color: white;
+}
+
+#cancelTicket:hover {
+    background-color: #666;
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
 .ticketHeaderRow,
 .ticketRowStyled {
     display: grid;
@@ -310,3 +348,24 @@ hr {
     height: 30px;
     color: white    ;
 }
+
+.statusBadge {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.statusBadge.open { background-color: #4caf50; }      
+.statusBadge.pending { background-color: #ff9800; } 
+.statusBadge.solved { background-color: #2196f3; }    
+.statusBadge.closed { background-color: #9e9e9e; }    
+
+.ticketCol.status button:hover {
+    opacity: 0.8;
+}
+
+
