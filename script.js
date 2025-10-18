@@ -201,18 +201,18 @@ function renderTickets(status = "all") {
         if (currentStatus === "closed") {
         statusBtn.disabled = true;
         statusBtn.classList.add("disabled");
-    } else {
+        } else {
         statusBtn.addEventListener("click", () => {
             const statuses = ["open", "pending", "solved", "closed"];
             let currentIndex = statuses.indexOf((ticket.status || "open").toLowerCase());
             if (currentIndex === -1) currentIndex = 0;
             const nextIndex = (currentIndex + 1) % statuses.length;
             ticket.status = statuses[nextIndex];
-            statusBtn.textContent = ticket.status.toUpperCase();
-            statusBtn.className = `statusBadge ${ticket.status.toLowerCase()}`;
-            if (status !== "all") renderTickets(status);
+
+            renderTickets(status);
         });
-    }
+}
+
 
 
         const companyCol = document.createElement("div");
