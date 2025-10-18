@@ -3,7 +3,6 @@ const buttons = document.querySelectorAll("#drawer .navBtn");
 const displayContent = document.getElementById("displayContent");
 const subjectInput = document.getElementById("subjectInput");
 
-
 const titles = {
     all: "ALL TICKETS",
     open: "OPEN TICKETS",
@@ -17,20 +16,23 @@ const companies = [
     "Converge", 
     "DITO", 
     "Globe",
-    "PLDC",
+    "PLDT",
     "Smart"
-]
+];
 
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         const status = button.getAttribute("status");
-
+        buttons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
         if (status) {
-            headerTitle.textContent = titles[status] || "Tickets";
+            headerTitle.textContent = titles[status] || button.textContent;
             if (status === "telecom") {
                 renderCompanies();
+            } else if (status === "all") {
+                renderTickets("all");
             } else {
-                displayContent.innerHTML = "";
+                renderTickets(status);
             }
         } else {
             headerTitle.textContent = button.textContent;
@@ -50,7 +52,7 @@ function renderCompanies(){
         item.className = "companyItem";
         
         const name = document.createElement("span");
-        name.className = "companyName"
+        name.className = "companyName";
         name.textContent = company;
 
         const callButton = document.createElement("button");
@@ -79,7 +81,6 @@ const messageInput = document.getElementById("messageInput");
 
 let allTickets = [];
 
-
 companies.forEach(company => {
     const option = document.createElement("option");
     option.value = company;
@@ -87,11 +88,9 @@ companies.forEach(company => {
     companySelect.appendChild(option);
 });
 
-
 newTicketBtn.addEventListener("click", () => {
     modal.classList.remove("hidden");
 });
-
 
 cancelBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
@@ -104,45 +103,6 @@ function resetModal() {
     messageInput.value = "";
 }
 
-
-function renderAllTickets() {
-    headerTitle.textContent = titles.all;
-    displayContent.innerHTML = "";
-
-    if (allTickets.length === 0) {
-        displayContent.textContent = "No tickets found.";
-        return;
-    }
-
-
-    const headerRow = document.createElement("div");
-    headerRow.className = "ticketHeaderRow";
-    headerRow.innerHTML = `
-        <div class="ticketCol company">Telecom Companies</div>
-        <div class="ticketCol subject">Subject</div>
-        <div class="ticketCol status">Status</div>
-        <div class="ticketCol date">Date</div>
-    `;
-    displayContent.appendChild(headerRow);
-
-    allTickets.forEach(ticket => {
-        const row = document.createElement("div");
-        row.className = "ticketRowStyled";
-
-        row.innerHTML = `
-            <div class="ticketCol company">
-                <span class="toLabel">To: ${ticket.company}</span>
-            </div>
-            <div class="ticketCol subject">${ticket.subject}</div>
-            <div class="ticketCol status">
-                <span class="statusBadge ${ticket.status.toLowerCase()}">${ticket.status}</span>
-            </div>
-            <div class="ticketCol date">${new Date(ticket.createdAt).toLocaleDateString()}</div>
-        `;
-
-        displayContent.appendChild(row);
-    });
-}
 
 const thankYouPopup = document.getElementById("thankYouPopup");
 const closeThankYou = document.getElementById("closeThankYou");
@@ -169,7 +129,6 @@ submitBtn.addEventListener("click", () => {
     resetModal();
 
     document.querySelector('[status="all"]').click();
-    renderAllTickets();
 
     thankYouPopup.classList.remove("hidden");
 });
@@ -178,4 +137,94 @@ closeThankYou.addEventListener("click", () => {
     thankYouPopup.classList.add("hidden");
 });
 
+function renderTickets(status = "all") {
+    headerTitle.textContent = titles[status] || "Tickets";
+    displayContent.innerHTML = "";
 
+    const toShow = status === "all"
+        ? allTickets
+        : allTickets.filter(t => (t.status || "").toLowerCase() === status.toLowerCase());
+
+    if (toShow.length === 0) {
+        displayContent.textContent = "No tickets found.";
+        return;
+    }
+
+    const headerRow = document.createElement("div");
+    headerRow.className = "ticketHeaderRow";
+    headerRow.innerHTML = `
+        <div class="ticketCol company">Telecom Companies</div>
+        <div class="ticketCol subject">Subject</div>
+        <div class="ticketCol status">Status</div>
+        <div class="ticketCol date">Date</div>
+    `;
+    displayContent.appendChild(headerRow);
+
+    toShow.forEach((ticket, index) => {
+        const row = document.createElement("div");
+        row.className = "ticketRowStyled";
+
+        const statusBtn = document.createElement("button");
+        const currentStatus = (ticket.status || "open").toLowerCase();
+        statusBtn.className = `statusBadge ${currentStatus}`;
+        statusBtn.textContent = currentStatus.toUpperCase();
+
+        statusBtn.addEventListener("click", () => {
+            const statuses = ["open", "pending", "solved", "closed"];
+            let currentIndex = statuses.indexOf((ticket.status || "open").toLowerCase());
+            if (currentIndex === -1) currentIndex = 0;
+            const nextIndex = (currentIndex + 1) % statuses.length;
+            ticket.status = statuses[nextIndex];
+            statusBtn.textContent = ticket.status.toUpperCase();
+            statusBtn.className = `statusBadge ${ticket.status.toLowerCase()}`;
+            if (status !== "all") renderTickets(status);
+        });
+
+        const companyCol = document.createElement("div");
+        companyCol.className = "ticketCol company";
+        const spanTo = document.createElement("span");
+        spanTo.className = "toLabel";
+        spanTo.textContent = `To: ${ticket.company}`;
+        companyCol.appendChild(spanTo);
+
+        const subjectCol = document.createElement("div");
+        subjectCol.className = "ticketCol subject";
+        subjectCol.textContent = ticket.subject;
+
+        const dateCol = document.createElement("div");
+        dateCol.className = "ticketCol date";
+        const d = ticket.createdAt instanceof Date ? ticket.createdAt : new Date(ticket.createdAt);
+        dateCol.textContent = isNaN(d.getTime()) ? "" : d.toLocaleDateString();
+
+        row.appendChild(companyCol);
+        row.appendChild(subjectCol);
+
+        const statusCol = document.createElement("div");
+        statusCol.className = "ticketCol status";
+        statusCol.appendChild(statusBtn);
+        row.appendChild(statusCol);
+
+        row.appendChild(dateCol);
+
+        displayContent.appendChild(row);
+    });
+}
+
+const searchBar = document.getElementById("searchBar");
+
+searchBar.addEventListener("input", function () {
+  const query = searchBar.value.toLowerCase().trim();
+
+  const ticketRows = document.querySelectorAll(".ticketRowStyled");
+  const companyItems = document.querySelectorAll(".companyItem");
+
+  ticketRows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? "" : "none";
+  });
+
+  companyItems.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(query) ? "" : "none";
+  });
+});
